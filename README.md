@@ -1,0 +1,1 @@
+RUN as python -m prototypeDeMa

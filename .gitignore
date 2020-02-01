@@ -1,0 +1,5 @@
+/prototypeDeMa/resources
+/prototypeDeMa/tests/testingGround.py
+__pycache__
+*.json
+.vscode
