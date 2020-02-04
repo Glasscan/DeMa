@@ -1,3 +1,5 @@
+"""Run the application with 'prototypeDeMa' as the module"""
+
 from prototypeDeMa import app
 
 if __name__ == "__main__":

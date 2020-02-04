@@ -1,1 +1,1 @@
-import prototypeDeMa
+"""Primary package with the main modules for the application."""

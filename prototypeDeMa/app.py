@@ -1,3 +1,5 @@
+"""Module for initializing the application."""
+
 from google.cloud import speech
 from google.cloud.speech import enums
 from google.cloud.speech import types
@@ -6,6 +8,14 @@ from prototypeDeMa.settings.config import Config
 
 
 def main():
+    """Application's main method. Loads configs and creates audio stream.
+
+    After loading the configurations, we use these settings to initialize
+    the client used for the cloud Speech-to-Text API. The client is used
+    to continuously process audio retrieved from a microphone before passing
+    the data back to be further processed by the application via ActionReader.
+    """
+
     config = Config()
     bitRate = config.bitRate
     chunkSize = int(bitRate / 10)
@@ -17,6 +27,7 @@ def main():
         sample_rate_hertz=bitRate,
         language_code=languageCode)
     streamingConfig = types.StreamingRecognitionConfig(config=clientConfig)
+
     print("Beginning live test...")
     with MicrophoneStream(bitRate, chunkSize) as audioStream:
         audioGenerator = audioStream.outputGenerator()
