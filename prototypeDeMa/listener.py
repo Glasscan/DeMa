@@ -31,7 +31,7 @@ class MicrophoneStream(object):
         _stream (Stream): The audio stream.
     """
 
-    def __init__(self, bitRate, chunkSize):
+    def __init__(self, bitRate, chunkSize, botConfig):
         """Initialize an instance of a MicrophoneStream.
 
         The input paramaters are retrieved from a config file.
@@ -41,7 +41,9 @@ class MicrophoneStream(object):
         self._chunkSize = chunkSize
         self._buff = queue.Queue()
         self.closed = True
+        self._config = botConfig
         self._thinker = EX.ActionReader()
+        self._config.buh()
 
     def __enter__(self):
         """Initialize audio interface and stream when entering 'with' block.

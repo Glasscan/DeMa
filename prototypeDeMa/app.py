@@ -16,10 +16,10 @@ def main():
     the data back to be further processed by the application via ActionReader.
     """
 
-    config = Config()
-    bitRate = config.bitRate
+    botConfig = Config()
+    bitRate = botConfig.bitRate
     chunkSize = int(bitRate / 10)
-    languageCode = config.languageCode
+    languageCode = botConfig.languageCode
 
     client = speech.SpeechClient()
     clientConfig = types.RecognitionConfig(
@@ -29,7 +29,7 @@ def main():
     streamingConfig = types.StreamingRecognitionConfig(config=clientConfig)
 
     print("Beginning live test...")
-    with MicrophoneStream(bitRate, chunkSize) as audioStream:
+    with MicrophoneStream(bitRate, chunkSize, botConfig) as audioStream:
         audioGenerator = audioStream.outputGenerator()
         requests = (types.StreamingRecognizeRequest(audio_content=content)
                     for content in audioGenerator)

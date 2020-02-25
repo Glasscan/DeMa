@@ -21,7 +21,7 @@ class ActionReader():
     """
 
     def __init__(self, state=STATE.LISTENING):
-        """Create an instance of this class, LISTENING by default."""
+        """Create an instance of this class that is LISTENING by default."""
 
         self.state = state
 
@@ -29,7 +29,7 @@ class ActionReader():
         """Reads our audio 'response' as input and does something with it.
 
         How the 'response' is handled is determined by the state
-        
+
         Args:
             response (string): Our processed audio as input.
         """
