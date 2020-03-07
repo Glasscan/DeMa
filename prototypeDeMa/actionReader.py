@@ -5,7 +5,9 @@ responses, and the action package which houses definitions for everything the
 application can do.
 """
 
-import prototypeDeMa.botState as STATE
+import prototypeDeMa.botState.asking as ASKING
+import prototypeDeMa.botState.listening as LISTENING
+import prototypeDeMa.botState.sleeping as SLEEPING
 
 
 class ActionReader():
@@ -18,20 +20,38 @@ class ActionReader():
     When LISTENING, the it is waiting for commands as normal. When ASKING,
     it is awaiting further input for the previous command; it need more info.
     SLEEPING is when it will not act on commands, except for 'wake.'
+
+    Attributes:
+        _LISTENING (State): An instance of a LISTENING state.
+        _SLEEPING (State): An instance of a SLEEPING state.
+        _ASKING (State): An instance of an ASKING state.
+        states (dictionary): A dictionary with the available states.
+        currentState (State): The current state, accessed from the dictionary.
     """
 
-    def __init__(self, state=STATE.LISTENING):
+    def __init__(self):
         """Create an instance of this class that is LISTENING by default."""
 
-        self.state = state
+        self._LISTENING = LISTENING.Listening()
+        self._SLEEPING = SLEEPING.Sleeping()
+        self._ASKING = ASKING.Asking()
+        self.states = {"LISTENING": self._LISTENING,
+                       "ASKING": self._ASKING,
+                       "SLEEPING": self._SLEEPING}
+        self.currentState = self.states["LISTENING"]
 
-    def readAction(self, response):
-        """Reads our audio 'response' as input and does something with it.
+    def readAction(self, input):
+        """Reads our audio as input and does something with it.
 
-        How the 'response' is handled is determined by the state
+        How the input is handled is determined by the state.
 
         Args:
-            response (string): Our processed audio as input.
+            input (string): Our processed audio as input.
         """
 
-        self.state.interpretAction(response)
+        ret = self.currentState.readAction(input)
+        if(ret in self.states):
+            self.changeState(ret)
+
+    def changeState(self, state):
+        self.currentState = self.states[state]

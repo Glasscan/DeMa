@@ -43,7 +43,6 @@ class MicrophoneStream(object):
         self.closed = True
         self._config = botConfig
         self._thinker = EX.ActionReader()
-        self._config.buh()
 
     def __enter__(self):
         """Initialize audio interface and stream when entering 'with' block.
@@ -62,7 +61,7 @@ class MicrophoneStream(object):
             input=True,
             frames_per_buffer=self._chunkSize,
             stream_callback=self._fillBuffer)
-#           self._stream.start_stream()
+        #   self._stream.start_stream()
         self.closed = False
         return self
 
@@ -148,6 +147,7 @@ class MicrophoneStream(object):
 
             if result.is_final:
                 self._thinker.readAction(transcript)
+                # Move below to actionReader
                 if re.fullmatch(r'\b(exit|quit|stop)\b', transcript, re.I):
                     print("Exiting...")
                     break
